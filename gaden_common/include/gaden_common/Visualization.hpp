@@ -15,7 +15,11 @@ namespace GadenUtils
     {
         visualization_msgs::msg::Marker sourceMarker;
         {
-            sourceMarker.header.frame_id = "map";
+            // Source coordinates come from the simulation's own CAD/CFD frame.
+            // Stamping them "map" tells RViz they are already in the SLAM map
+            // frame, so the required transform is skipped and the marker lands
+            // off by exactly the map origin offset.
+            sourceMarker.header.frame_id = "gaden_map";
             sourceMarker.header.stamp = node->now();
             sourceMarker.ns = "Gas_Dispersion";
             sourceMarker.action = visualization_msgs::msg::Marker::ADD;
